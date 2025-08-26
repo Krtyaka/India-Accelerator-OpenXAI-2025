@@ -5,7 +5,11 @@ import { useState } from "react";
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [result, setResult] = useState<{ verdict: string; description: string; fullResponse: string } | null>(null);
+  const [result, setResult] = useState<{
+    verdict: string;
+    description: string;
+    fullResponse: string;
+  } | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,7 +19,7 @@ export default function Home() {
       setSelectedFile(file);
       setResult(null);
       setError(null);
-      
+
       // Create preview
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -55,15 +59,15 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-red-600 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-gradient-to-br from-red-600 to-orange-300 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center text-red-600 mb-6">
-          🔥 HOT or NOT 🔥
+        <h1 className="text-3xl font-bold text-center text-green-800 mb-6">
+          🔥 HOT or NOT ❌
         </h1>
-        
+
         <div className="space-y-6">
           {/* File Upload */}
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-red-400 hover:bg-red-50 transition-colors">
             <input
               type="file"
               accept="image/*"
@@ -71,16 +75,25 @@ export default function Home() {
               className="hidden"
               id="image-upload"
             />
-            <label
-              htmlFor="image-upload"
-              className="cursor-pointer block"
-            >
+            <label htmlFor="image-upload" className="cursor-pointer block">
               <div className="text-gray-600">
-                <svg className="mx-auto h-12 w-12 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                <svg
+                  className="mx-auto h-12 w-12 mb-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
                 </svg>
                 <p className="text-lg font-medium">Click to upload an image</p>
-                <p className="text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                <p className="text-sm text-gray-500">
+                  PNG, JPG, GIF up to 10MB
+                </p>
               </div>
             </label>
           </div>
@@ -118,9 +131,13 @@ export default function Home() {
           {/* Result */}
           {result && (
             <div className="text-center">
-              <div className={`text-6xl font-bold mb-2 ${
-                result.verdict === "HOT" ? "text-red-600" : "text-gray-600"
-              }`}>
+              <div
+                className={`text-6xl font-bold mb-2 ${
+                  result.verdict === "HOT"
+                    ? "text-red-600 drop-shadow-[0_0_10px_rgba(255,0,0,0.6)]"
+                    : "text-gray-600"
+                }`}
+              >
                 {result.verdict === "HOT" ? "🔥 HOT 🔥" : "❌ NOT ❌"}
               </div>
               <div className="text-lg font-medium text-gray-700 mb-4">
